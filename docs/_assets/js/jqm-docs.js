@@ -8,21 +8,30 @@ $(function(){
 });
 
 function displayTable(){
-	jQuery.getJSON("app-data/wp_postmeta_extended.json",
-			function(data) {
-                for (var x = 0; x < data.length; x++) {
-                	 $('#result ul').append("<li><a href='#"+data[x].ID+"' class='ui-link-inherit'><h3 class='ui-li-heading'>" +data[x].post_title+ "</h3><p class='ui-li-desc'>" + data[x].Location +"</p><span class='ui-li-count ui-btn-up-c ui-btn-corner-all'>"+data[x].ID+"</span></a></li>");
-                }
-                $('ul').listview('refresh');
-              }
-  );
+
 }
 
 // List page
 $('#mosque-list').live("pageinit", function() {
-   // $.mobile.changePage($('#mosque-list'), {});
-    
-           displayTable();
+ // $('#mosque-list').bind('pageshow', function() {
+
+alert('s');
+   
+	jQuery.getJSON("app-data/wp_postmeta_extended.json",
+			function(data) {
+                for (var x = 0; x < data.length; x++) {
+                	 $('#result ul').append("<li><a href='#"+data[x].ID+"' class='ui-link-inherit'><h3 class='ui-li-heading'>" +data[x].post_title+ "</h3><p class='ui-li-desc'>" + data[x].Location +"</p><span class='ui-li-count ui-btn-up-c ui-btn-corner-all'>"+data[x].ID+" km</span></a></li>");
+                }
+               // $.mobile.changePage($('#mosque-list'), {transition: "slideup"});
+   					$('#mosque-list').page();
+              }
+  );
+  	alert('FINISH');
+  	$('#mosque-list').page();
+  	$('ul').listview('refresh');
+  	//$.mobile.initializePage;
+	//	$('#mosque-list').page();
+	
    });
 
 // display the version of jQM

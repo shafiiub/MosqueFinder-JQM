@@ -12,15 +12,16 @@
 </head> 
 <body> 
 
-	<div data-role="page" class="type-index" id="mosque-list">
+	<div data-role="page" id="mosque-list" data-role="content" data-theme="d">
 
 		<div data-role="header" data-theme="d">
-		<h1>Mosque Finder</h1>
-		<a href="index.html" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right jqm-home">Home</a>
-	</div><!-- /header -->
+			<h1>Mosque Finder</h1>
+			<a href="index.html" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right jqm-home">Home</a>
+		</div><!-- /header -->
 
 	<div data-role="content" id="result">
-		<ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Search ..." >
+		<ul data-role="listview" data-inset="true" data-filter="true">
+		<li><a href="#popup"data-role="button" data-rel="dialog" data-transition="pop"> popup </a></li>
 		</ul>
 	</div><!-- /content -->
 
@@ -30,5 +31,27 @@
 
 	</div><!-- /page -->
 
+<!-- Start of page: #popup -->
+<div data-role="page" id="popup">
+<script type="text/javascript">
+    $('#popup').bind('pageinit', function (event)
+    {
+        console.log('popup init');
+    });
+</script>
+    <div data-role="header" data-theme="e">
+        <h1>Dialog</h1>
+    </div><!-- /header -->
+
+    <div data-role="content" data-theme="d">
+        <h2>Popup</h2>
+        <p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>        
+        <p><a href="#one" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to page "one"</a></p>    
+    </div><!-- /content -->
+    
+    <div data-role="footer">
+        <h4>Page Footer</h4>
+    </div><!-- /footer -->
+</div><!-- /page popup -->
 	</body>
 	</html>
