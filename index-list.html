@@ -10,20 +10,40 @@
 	<script src="docs/_assets/js/jqm-docs.js"></script>
 	<script src="js/jquery.mobile-1.1.1.js"></script>
 </head> 
+<script type="text/javascript">
+    function loadJson() {
+        var jResult = [{ title: "Google", url : "http://www.google.com/"}, { title: "Bing", url : "http://www.bing.com" }, { title: "Yahoo", url: "http://www.yahoo.com" }];
+        var htmlString = "";
+    for (i = 0; i < jResult.length; i++) {
+            htmlString += '<a href="' + jResult[i].url + '" data-role="button">' + jResult[i].title + '</a>';
+    }
+        $("#buttonGroup").append(htmlString);
+        $("#buttonGroup a").button();
+        $("#buttonGroup").controlgroup();
+        
+        return false;
+    }
+</script>
 <body> 
 
-	<div data-role="page" id="mosque-list" data-role="content" data-theme="d">
+	<div data-role="page" id="mosque-list" data-theme="d">
 
 		<div data-role="header" data-theme="d">
 			<h1>Mosque Finder</h1>
 			<a href="index.html" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right jqm-home">Home</a>
 		</div><!-- /header -->
-
+		<div data-role="content" id="result">
+                <a href="#" data-role="button" id="loadJson">Click me!</a>
+                <div data-role="controlgroup" id="buttonGroup">
+                </div>
+        </div><!-- /content -->  
+	<!--
 	<div data-role="content" id="result">
 		<ul data-role="listview" data-inset="true" data-filter="true">
 		<li><a href="#popup"data-role="button" data-rel="dialog" data-transition="pop"> popup </a></li>
 		</ul>
 	</div><!-- /content -->
+	-->
 
 	<div data-role="footer" class="footer-docs" data-theme="c">
 			<p>&copy; 2011-2012 The jQuery Project</p>

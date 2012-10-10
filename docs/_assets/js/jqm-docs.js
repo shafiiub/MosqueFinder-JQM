@@ -13,6 +13,7 @@ function displayTable(){
 
 // List page
 $('#mosque-list').live("pageinit", function() {
+$("#loadJson").click(loadJson);
  // $('#mosque-list').bind('pageshow', function() {
 
 alert('s');
@@ -20,7 +21,7 @@ alert('s');
 	jQuery.getJSON("app-data/wp_postmeta_extended.json",
 			function(data) {
                 for (var x = 0; x < data.length; x++) {
-                	 $('#result ul').append("<li><a href='#"+data[x].ID+"' class='ui-link-inherit'><h3 class='ui-li-heading'>" +data[x].post_title+ "</h3><p class='ui-li-desc'>" + data[x].Location +"</p><span class='ui-li-count ui-btn-up-c ui-btn-corner-all'>"+data[x].ID+" km</span></a></li>");
+                	 $('#result ul').append("<li><a href='#"+data[x].ID+"' class='ui-link-inherit' data-rel='dialog' data-transition='pop'><h3 class='ui-li-heading'>" +data[x].post_title+ "</h3><p class='ui-li-desc'>" + data[x].Location +"</p><span class='ui-li-count ui-btn-up-c ui-btn-corner-all'>"+data[x].ID+" km</span></a></li>");
                 }
                // $.mobile.changePage($('#mosque-list'), {transition: "slideup"});
    					$('#mosque-list').page();
@@ -28,7 +29,8 @@ alert('s');
   );
   	alert('FINISH');
   	$('#mosque-list').page();
-  	$('ul').listview('refresh');
+  	$('#result ul').trigger('create'); 
+  	$('#result ul').listview('refresh');
   	//$.mobile.initializePage;
 	//	$('#mosque-list').page();
 	
