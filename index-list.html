@@ -11,6 +11,12 @@
 	<script src="docs/_assets/js/jqm-docs.js"></script>
 	<script src="js/jquery.mobile-1.1.1.js"></script>
 </head> 
+<script>
+Ext.Loader.setConfig({
+	enabled: true, disableCaching: false
+});
+Ext.Ajax.setDisableCaching(false);
+</script>
 <script type="text/javascript">
     function loadJson() {
         //var jResult = [{ title: "Google", url : "http://www.google.com/"}, { title: "Bing", url : "http://www.bing.com" }, { title: "Yahoo", url: "http://www.yahoo.com" }];
