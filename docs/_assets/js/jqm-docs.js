@@ -1,4 +1,5 @@
-
+Ext.Loader.setConfig({enabled: true, disableCaching: false});
+Ext.Ajax.setDisableCaching(false);
 
 //collapse page navs after use
 $(function(){
