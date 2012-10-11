@@ -7,19 +7,23 @@
 	<link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.1.1.css" />
 	<link rel="stylesheet" href="docs/_assets/css/jqm-docs.css" />
 	<script src="js/jquery.js"></script>
+	<script src="app-data/wp_postmeta_extended.js"></script>
 	<script src="docs/_assets/js/jqm-docs.js"></script>
 	<script src="js/jquery.mobile-1.1.1.js"></script>
 </head> 
 <script type="text/javascript">
     function loadJson() {
-        var jResult = [{ title: "Google", url : "http://www.google.com/"}, { title: "Bing", url : "http://www.bing.com" }, { title: "Yahoo", url: "http://www.yahoo.com" }];
+        //var jResult = [{ title: "Google", url : "http://www.google.com/"}, { title: "Bing", url : "http://www.bing.com" }, { title: "Yahoo", url: "http://www.yahoo.com" }];
         var htmlString = "";
     for (i = 0; i < jResult.length; i++) {
-            htmlString += '<a href="' + jResult[i].url + '" data-role="button">' + jResult[i].title + '</a>';
+           // htmlString += '<a href="' + jResult[i].ID + '" data-role="button">' + jResult[i].post_title + '</a>';
+			htmlString += "<li><a href='#"+ jResult[i].ID +"' class='ui-link-inherit'><h3 class='ui-li-heading'>" +jResult[i].post_title+ "</h3><p class='ui-li-desc'>" + jResult[i].Location +"</p><span class='ui-li-count ui-btn-up-c ui-btn-corner-all'>"+jResult[i].ID+" km</span></a></li>";
     }
-        $("#buttonGroup").append(htmlString);
-        $("#buttonGroup a").button();
-        $("#buttonGroup").controlgroup();
+        $("#search-results ul").append(htmlString);
+        $("#search-results").trigger("create");
+        $('ul').listview('refresh');
+       // $("#buttonGroup a").button();
+       // $("#buttonGroup").controlgroup();
         
         return false;
     }
@@ -37,13 +41,14 @@
                 <div data-role="controlgroup" id="buttonGroup">
                 </div>
         </div><!-- /content -->  
-	<!--
-	<div data-role="content" id="result">
+	
+	<div data-role="content" id="search-results">
 		<ul data-role="listview" data-inset="true" data-filter="true">
-		<li><a href="#popup"data-role="button" data-rel="dialog" data-transition="pop"> popup </a></li>
 		</ul>
+	<a href="#popup"data-role="button" data-rel="dialog" data-transition="pop"> popup </a>
+
 	</div><!-- /content -->
-	-->
+
 
 	<div data-role="footer" class="footer-docs" data-theme="c">
 			<p>&copy; 2011-2012 The jQuery Project</p>
