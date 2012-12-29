@@ -1,5 +1,5 @@
-Ext.Loader.setConfig({enabled: true, disableCaching: false});
-Ext.Ajax.setDisableCaching(false);
+//Ext.Loader.setConfig({enabled: true, disableCaching: false});
+//Ext.Ajax.setDisableCaching(false);
 
 //collapse page navs after use
 $(function(){
@@ -18,8 +18,9 @@ $("#loadJson").click(loadJson);
  // $('#mosque-list').bind('pageshow', function() {
 
 alert('s');
-   
-	jQuery.getJSON("app-data/wp_postmeta_extended.json",
+   var url = 'http://www.shafi.com.au/directory/app-data/wp_postmeta_extended.json';
+
+	jQuery.getJSON( url,
 			function(data) {
                 for (var x = 0; x < data.length; x++) {
                 	 $('#result ul').append("<li><a href='#"+data[x].ID+"' class='ui-link-inherit' data-rel='dialog' data-transition='pop'><h3 class='ui-li-heading'>" +data[x].post_title+ "</h3><p class='ui-li-desc'>" + data[x].Location +"</p><span class='ui-li-count ui-btn-up-c ui-btn-corner-all'>"+data[x].ID+" km</span></a></li>");
