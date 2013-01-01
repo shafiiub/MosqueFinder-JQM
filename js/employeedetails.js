@@ -1,40 +1,14 @@
+var jsonURL = "http://mosque-finder.com.au/directory/api/get_post/"
 $('#detailsPage').live('pageshow', function(event) {
 	var id = getUrlVars()["id"];
-	$.getJSON(serviceURL + 'getemployee.php?id='+id, displayEmployee);
+	$.getJSON(jsonURL + '?id='+id, displayEmployee);
 });
 
 function displayEmployee(data) {
-	var employee = data.item;
-	console.log(employee);
-	$('#employeePic').attr('src', 'pics/' + employee.picture);
-	$('#fullName').text(employee.firstName + ' ' + employee.lastName);
-	$('#employeeTitle').text(employee.title);
-	$('#city').text(employee.city);
-	console.log(employee.officePhone);
-	if (employee.managerId>0) {
-		$('#actionList').append('<li><a href="employeedetails.html?id=' + employee.managerId + '"><h3>View Manager</h3>' +
-				'<p>' + employee.managerFirstName + ' ' + employee.managerLastName + '</p></a></li>');
-	}
-	if (employee.reportCount>0) {
-		$('#actionList').append('<li><a href="reportlist.html?id=' + employee.id + '"><h3>View Direct Reports</h3>' +
-				'<p>' + employee.reportCount + '</p></a></li>');
-	}
-	if (employee.email) {
-		$('#actionList').append('<li><a href="mailto:' + employee.email + '"><h3>Email</h3>' +
-				'<p>' + employee.email + '</p></a></li>');
-	}
-	if (employee.officePhone) {
-		$('#actionList').append('<li><a href="tel:' + employee.officePhone + '"><h3>Call Office</h3>' +
-				'<p>' + employee.officePhone + '</p></a></li>');
-	}
-	if (employee.cellPhone) {
-		$('#actionList').append('<li><a href="tel:' + employee.cellPhone + '"><h3>Call Cell</h3>' +
-				'<p>' + employee.cellPhone + '</p></a></li>');
-		$('#actionList').append('<li><a href="sms:' + employee.cellPhone + '"><h3>SMS</h3>' +
-				'<p>' + employee.cellPhone + '</p></a></li>');
-	}
+	$('#pageTitle').html(data.post.title);
+	$('#locationDetails').html(data.post.content);
+	//console.log(employee.content);
 	$('#actionList').listview('refresh');
-	
 }
 
 function getUrlVars() {
@@ -46,5 +20,29 @@ function getUrlVars() {
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
     }
+
     return vars;
 }
+
+function initialize(address, num, zoom) {
+	var geo = new google.maps.Geocoder(),
+	latlng = new google.maps.LatLng(-34.397, 150.644),
+	myOptions = {
+	 'zoom': zoom,
+         center: latlng,
+	 mapTypeId: google.maps.MapTypeId.ROADMAP
+    },
+    map = new google.maps.Map(document.getElementById("themify_map_canvas_" + num), myOptions);
+
+	geo.geocode( { 'address': address}, function(results, status) {
+	 if (status == google.maps.GeocoderStatus.OK) {
+	   map.setCenter(results[0].geometry.location);
+	   var marker = new google.maps.Marker({
+		  map: map, 
+		  position: results[0].geometry.location
+	   });
+	 } else {
+	   // status
+	 }
+    });
+  }
