@@ -13,12 +13,13 @@
       Australian Prayer Location finder powered by Mosque-Finder.com.au
     </description>
 
-    <author href="https://shafi.com.au" email="support@mosque-finder.com.au">
+    <author href="https://shafi.com.au" email="support@phonegap.com">
         Abu Shafi
     </author>
 	<access origin="http://mosque-finder.com.au" />
 	<access origin="http://code.jquery.com" />
 	<access origin="https://maps.googleapis.com" />
 	
-	<plugin name="Storage" value="org.apache.cordova.Storage" />
+    <plugin name="Storage" value="org.apache.cordova.Storage" />
+	<plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
 </widget>
