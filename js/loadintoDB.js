@@ -41,6 +41,8 @@ window.dao =  {
                     "deleted INTEGER, " +
                     "lastModified VARCHAR(50))";
                 tx.executeSql(sql);
+                tx.executeSql('CREATE TABLE IF NOT EXISTS CURRENTLOCATION(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, latitude VARCHAR(50), longitude VARCHAR(50), altitude VARCHAR(50), accuracy VARCHAR(50),altitudeAccuracy VARCHAR(50), heading VARCHAR(50), speed VARCHAR(50),timestamp VARCHAR(50))');
+
             },
             this.txErrorHandler,
             function() {
@@ -54,6 +56,7 @@ window.dao =  {
         this.db.transaction(
             function(tx) {
                 tx.executeSql('DROP TABLE IF EXISTS employee');
+                tx.executeSql('DROP TABLE IF EXISTS CURRENTLOCATION');
             },
             this.txErrorHandler,
             function() {
@@ -248,3 +251,6 @@ function errorGeoCDB(err) {
 function successGeoCDB() {
     alert("success!");
 }
+
+
+
