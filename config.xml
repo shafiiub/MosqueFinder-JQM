@@ -22,4 +22,5 @@
 	
     <plugin name="Storage" value="org.apache.cordova.Storage" />
 	<plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
+	<plugin name="Compass" value="org.apache.cordova.CompassListener" />
 </widget>
