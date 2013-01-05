@@ -16,6 +16,7 @@ function onGeoSuccess(position) {
      var times = prayTimes.getTimes(new Date(), [position.coords.latitude,position.coords.longitude ]);
      $("#prayerTimeInfo").html('<strong>Prayer time for today</strong></br> <strong>Fajr :</strong> ' +times.fajr  + ' <strong>Dhuhr :</strong> '+ times.dhuhr +'  <strong>Asr :</strong> '+ times.asr +	' <strong>Maghrib  :</strong> '+ times.maghrib +' <strong>Isha :</strong> '+ times.isha +'</br><strong>Sunrise :</strong> '+ times.sunrise +'<strong>Sunset :</strong> '+ times.sunset) ;
     direction = qiblaDirection(position);
+    console.log("Qibla Direction: " + direction);
     if(direction >=0){
          $("#prayerDirection").html( "<strong>Qibla Direction </strong>" + direction + "degrees east of North");
     }else{ 
@@ -64,27 +65,37 @@ function successGeoCDB() {
 
 function qiblaDirection( position){
 
-        var lat = position.coords.latitude;
-        var lon= position.coords.longitude;
-        var PI = Math.PI;
+        var lat1= 21.42259;
+        var lon1= 39.826169;
 
-	if (isNaN(lat-0.0) || isNaN(lon-0.0)) {
-		alert("Non-numeric entry/entries");
-		return "???";
-	}
-	if ((lat-0.0)>(90.0-0.0) || (lat-0.0)<(-90.0-0.0)) {
-		alert("Latitude must be between -90 and 90 degrees");
-		return "???";
-	}
-	if ((lon-0.0)>(180.0-0.0) || (lon-0.0)<(-180.0-0.0)) {
-		alert("Longitude must be between -180 and 180 degrees");
-		return "???";
-	}
-	if (Math.abs(lat-21.4)<Math.abs(0.0-0.01) && Math.abs(lon-39.8)<Math.abs(0.0-0.01)) return "Any";	//Mecca
-	phiK = 21.4*PI/180.0;
-	lambdaK = 39.8*PI/180.0;
-	phi = lat*PI/180.0;
-	lambda = lon*PI/180.0;
-	psi = 180.0/PI*Math.atan2(Math.sin(lambdaK-lambda),Math.cos(phi)*Math.tan(phiK)-Math.sin(phi)*Math.cos(lambdaK-lambda));
-	return Math.round(psi);
+        var lat2 = position.coords.latitude;
+        var lon2= position.coords.longitude;
+
+
+
+
+var R = 6371; // km
+var dLat = (lat2-lat1).toRad();
+var dLon = (lon2-lon1).toRad();
+var lat1 = lat1.toRad();
+var lat2 = lat2.toRad();
+
+var y = Math.sin(dLon) * Math.cos(lat2);
+var x = Math.cos(lat1)*Math.sin(lat2) -
+        Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+var brng = Math.atan2(y, x).toDeg();
+console.log(brng);
+return Math.round(brng);
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// extend Number object with methods for converting degrees/radians
+Number.prototype.toRad = function() { // convert degrees to radians
+return this * Math.PI / 180;
+}
+Number.prototype.toDeg = function() { // convert radians to degrees (signed)
+return this * 180 / Math.PI;
+}
+Number.prototype.toBrng = function() { // convert radians to degrees (as bearing: 0...360)
+return (this.toDeg()+360) % 360;
 }

@@ -199,58 +199,8 @@ function renderList(employees) {
  // Cordova is ready
     //
 function onDeviceReady() {
-    //dao.sync(renderList);
-    navigator.geolocation.getCurrentPosition(onGeoSuccess,onGeoError);
+    dao.sync(renderList);
+    $("#btnDelete").click(function() {
+    dao.dropTable(renderList);
+});    
 }
-
-function currentLocation() {
-    
-}
-    // onSuccess Geolocation
-    //
-function onGeoSuccess(position) {
-
-    var db = window.openDatabase("syncdemodb", "1.0", "Sync Demo DB", 200000);
-      var sql ="INSERT INTO DEMO (id unique, latitude, longitude, altitude, accuracy,altitudeAccuracy, heading, speed,timestamp) VALUES ('',?,?,?,?,?,?,?,?)";
-      var params = [position.coords.latitude, position.coords.longitude , position.coords.altitude , position.coords.accuracy , position.coords.altitudeAccuracy , position.coords.heading,  position.coords.speed , position.timestamp];
-     db.transaction(function populateDB(tx) {
-     tx.executeSql('DROP TABLE IF EXISTS CURRENTLOCATION');
-     tx.executeSql('CREATE TABLE IF NOT EXISTS CURRENTLOCATION(id unique, latitude VARCHAR(50), longitude VARCHAR(50), altitude VARCHAR(50), accuracy VARCHAR(50),altitudeAccuracy VARCHAR(50), heading VARCHAR(50), speed VARCHAR(50),timestamp VARCHAR(50))');
-     tx.executeSql(sql, params);
- 
-}, errorGeoCDB, successGeoCDB);
-
-
-
-
-
-     console.log('Latitude: '           + position.coords.latitude              + '<br />' +
-                            'Longitude: '          + position.coords.longitude             + '<br />' +
-                            'Altitude: '           + position.coords.altitude              + '<br />' +
-                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                            'Heading: '            + position.coords.heading               + '<br />' +
-                            'Speed: '              + position.coords.speed                 + '<br />' +
-                            'Timestamp: '          + position.timestamp          + '<br />');
- 
-    }
-
-    // onError Callback receives a PositionError object
-    function onGeoError(error) {
-        alert('code: '    + error.code    + '\n' +
-                'message: ' + error.message + '\n');
-    }
-
-
-
-
-function errorGeoCDB(err) {
-    alert("Error processing SQL: "+err.code);
-}
-
-function successGeoCDB() {
-    alert("success!");
-}
-
-
-
